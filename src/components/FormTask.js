@@ -38,16 +38,17 @@ const styles = theme => ({
     constructor(props){
         super(props);
         this.state = {
-            item: ''
+            task: '',
+            done: false
         }
     };
        
     render(){
        
-        const { item } = this.state;
+        const { task, done } = this.state;
         const { classes } = this.props;
         console.log('form props', this.props)
-        console.log('form state', item)
+        console.log('form state::::::', task)
 
         return (
         <form className={classes.container} noValidate autoComplete="off">
@@ -55,13 +56,14 @@ const styles = theme => ({
               id="outlined-task-input"
               label="Create new task here..."
               className={classes.textField}
-              onChange={e => this.setState({ item: e.target.value})}
+              onChange={e => this.setState({ task: e.target.value})}
               name="Create new task here..."
               autoComplete="Create new task here..."
               margin="normal"
               variant="outlined"
+              //value={task}
             />
-            <Button variant="contained" color="primary" className={classes.button} onClick={() => this.props.addItem(item)} >
+            <Button variant="contained" color="primary" className={classes.button} onClick={() => this.props.addTask(task, done)} >
               Create
             </Button>
             {/* <AddButton onClick={this.props.addItem(item)} /> */}
