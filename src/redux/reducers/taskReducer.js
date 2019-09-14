@@ -40,6 +40,13 @@ const taskReducer = (state = { tasks: [], edit: null }, action) => {
                 tasks: state.tasks,
                 edit: {id: action.payload.id, name: action.payload.name}
                 }
+        case 'UPDATE':
+            return{
+                tasks: state.tasks.map( task =>                  
+                       
+                    task.id === action.payload.id ?  { ...task, name: action.payload.text}  : task
+                )
+            }        
 
 
          default: return state   

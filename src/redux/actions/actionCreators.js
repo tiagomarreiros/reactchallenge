@@ -30,6 +30,14 @@ export const editTask = (id, name) => ({
     }
 })
 
+export const updateTask = (id, text) => ({
+    type: 'UPDATE',
+    payload: {
+        id,
+        text
+    }
+})
+
 
   export const hideCompleted = () => ({
       type: 'HIDE'

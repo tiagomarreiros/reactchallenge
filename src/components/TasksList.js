@@ -123,7 +123,10 @@ class TasksList extends React.Component {
                       />
                     </DialogContent>
                     <DialogActions>
-                      <Button onClick={() => this.handleClose()} color="primary">
+                      <Button onClick={() => {
+                        this.props.updateTask(this.state.id, this.state.text)
+                        this.handleClose()
+                      }} color="primary">
                         Update
                       </Button>
                     </DialogActions>
