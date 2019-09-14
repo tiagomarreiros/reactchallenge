@@ -1,13 +1,13 @@
 import React from 'react';
 import FormTask from './components/FormTask';
-import ListTasks from './components/ListTasks';
+import TasksList from './components/TasksList';
 import HideComp from './components/HideComp';
 
 function App() {
   return (
     <div className="App">
       <FormTask />
-      <ListTasks />
+      <TasksList />
       <HideComp />
     </div>
   );

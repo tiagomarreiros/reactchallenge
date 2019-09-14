@@ -39,13 +39,12 @@ const styles = theme => ({
         super(props);
         this.state = {
             task: '',
-            done: false
         }
     };
        
     render(){
        
-        const { task, done } = this.state;
+        const { task } = this.state;
         const { classes } = this.props;
         console.log('form props', this.props)
         console.log('form state::::::', task)
@@ -63,7 +62,7 @@ const styles = theme => ({
               variant="outlined"
               //value={task}
             />
-            <Button variant="contained" color="primary" className={classes.button} onClick={() => this.props.addTask(task, done)} >
+            <Button variant="contained" color="primary" className={classes.button} onClick={() => this.props.addTask(task)} >
               Create
             </Button>
             {/* <AddButton onClick={this.props.addItem(item)} /> */}

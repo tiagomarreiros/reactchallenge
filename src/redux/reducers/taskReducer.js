@@ -4,7 +4,7 @@ const taskReducer = (state = { tasks: [] }, action) => {
             const { task } = action.payload
                 return { 
                     ...state,
-                    tasks: [...state.tasks, {task, completed: false}]
+                    tasks: [...state.tasks, {name: task, completed: false}]
                 } 
             // console.log('payload task', action.payload)
             //const task = action.payload.task;
