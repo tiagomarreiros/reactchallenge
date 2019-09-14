@@ -1,11 +1,12 @@
-const taskReducer = (state = { tasks: [] }, action) => {
+const taskReducer = (state = { tasks: [], edit: null }, action) => {
     console.log('payload',action)
     
     switch(action.type){
         case 'ADD':
             const { task, id } = action.payload
                 return { 
-                    tasks: [{id: id, name: task, completed: false}, ...state.tasks]
+                    tasks: [{id: id, name: task, completed: false}, ...state.tasks],
+                    edit: {}
                 } 
             // console.log('payload task', action.payload)
             //const task = action.payload.task;
@@ -23,11 +24,23 @@ const taskReducer = (state = { tasks: [] }, action) => {
                     
                        
                             task.id === action.payload.id ?  { ...task, completed: !task.completed}  : task
+                           
                             // task.id === action.payload.id ? { ...task, completed: !task.completed } : task
                             
                     
                     ) 
-                }  
+                } 
+        case 'DELETE':
+             return {
+                tasks: state.tasks.filter( task => task.id !== action.payload.id)
+             }  
+
+        case 'EDIT':
+            return{ 
+                tasks: state.tasks,
+                edit: {id: action.payload.id, name: action.payload.name}
+                }
+
 
          default: return state   
     }

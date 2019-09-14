@@ -34,39 +34,53 @@ const styles = theme => ({
 });
 
   class FormTask extends React.Component {
-
+   
     constructor(props){
         super(props);
         this.state = {
-            task: '',
+            task: '' 
         }
     };
        
+    /* componentWillReceiveProps(){
+
+      if(this.props.edit.name !== null)
+        this.setState({task: this.props.edit.name})
+      return null  
+    } */
+  
     render(){
        
         const { task } = this.state;
         const { classes } = this.props;
-        console.log('form props', this.props)
+        console.log('form props', this.props.tasks)
         console.log('form state::::::', task)
 
         return (
-        <form className={classes.container} noValidate autoComplete="off">
-          <TextField
-              id="outlined-task-input"
-              label="Create new task here..."
-              className={classes.textField}
-              onChange={e => this.setState({ task: e.target.value})}
-              name="Create new task here..."
-              autoComplete="Create new task here..."
-              margin="normal"
-              variant="outlined"
-              //value={task}
-            />
-            <Button variant="contained" color="primary" className={classes.button} onClick={() => this.props.addTask(task)} >
-              Create
-            </Button>
-            {/* <AddButton onClick={this.props.addItem(item)} /> */}
-        </form>
+          <form className={classes.container} noValidate autoComplete="off">
+            <TextField
+                id="outlined-task-input"
+                label="Create new task here..."
+                className={classes.textField}
+                onChange={e => this.setState({ task: e.target.value})}
+                name="Create new task here..."
+                autoComplete="Create new task here..."
+                margin="normal"
+                variant="outlined"
+                value={task}
+                //value={task}
+              />
+              <Button variant="contained" color="primary" className={classes.button} 
+                      onClick={() => {
+                        this.props.addTask(task)
+                        this.setState({task: ''})
+                      } 
+                    }
+                      >
+                Create
+              </Button>
+              {/* <AddButton onClick={this.props.addItem(item)} /> */}
+          </form>
         );
     }
   }
@@ -79,7 +93,11 @@ const styles = theme => ({
     return bindActionCreators(actionCreators, dispatch);
   }
 
+  const mapStateToProps = state => ({
+    edit: state.tasks.edit
+  })
+
   export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )( withStyles(styles)(FormTask))

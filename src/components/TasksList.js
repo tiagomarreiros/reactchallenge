@@ -8,6 +8,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
+
 // import IconButton from '@material-ui/core/IconButton';
 // import CommentIcon from '@material-ui/icons/Comment';
 import Button from '@material-ui/core/Button';
@@ -34,25 +41,32 @@ const styles = theme => ({
 });
 
 class TasksList extends React.Component {
-  
-  
- /*  const handleToggle = value => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
 
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
+  constructor(props){
+    super(props)
+    this.state = {
+      open: false,
+      setOpen: false,
+      text: '',
+      id: ''
     }
+    this.handleClickOpen = this.handleClickOpen.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+  }
+  
+  handleClickOpen() {
+    this.setState({setOpen: true})
+  }
 
-    setChecked(newChecked);
-  }; */
+  handleClose() {
+    this.setState({setOpen: false})
+  }
+ 
   render(){
     const { tasks, classes } = this.props
 
     console.log('list props', this.props)
-
+    console.log('list state', this.state)
     return (
       <List className={classes.root}
           subheader={
@@ -77,11 +91,14 @@ class TasksList extends React.Component {
               </ListItemIcon>
               <ListItemText id={index} primary={task.name} />
               <ListItemSecondaryAction>
-                  <Button variant="contained" color="primary" className={classes.button}>
+                  <Button variant="contained" color="primary" className={classes.button} onClick={() => {
+                    this.handleClickOpen()
+                    this.setState({text: task.name, id: task.id})
+                    }}>
                       Edit
                       <EditIcon className={classes.rightIcon} />
                   </Button>
-                  <Button variant="contained" color="secondary" className={classes.button}>
+                  <Button variant="contained" color="secondary" className={classes.button} onClick={ () => this.props.deleteTask(task.id)}>
                       Delete
                       <DeleteIcon className={classes.rightIcon} />
                   </Button>
@@ -91,6 +108,26 @@ class TasksList extends React.Component {
           )          
           
         )}
+        <Dialog open={this.state.setOpen} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+                    <DialogTitle id="form-dialog-title">Update</DialogTitle>
+                    <DialogContent>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label='Edit'
+                        type="text"
+                        value={this.state.text}
+                        onChange={e => this.setState({ text: e.target.value})}
+                        fullWidth
+                      />
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={() => this.handleClose()} color="primary">
+                        Update
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
       </List>
       );
 

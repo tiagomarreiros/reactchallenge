@@ -14,3 +14,23 @@ export const toggleTask = id => ({
         id
     }
   })
+
+export const deleteTask = id => ({
+    type: 'DELETE',
+    payload: {
+        id
+    }
+})
+
+export const editTask = (id, name) => ({
+    type: 'EDIT',
+    payload: {
+        id,
+        name,
+    }
+})
+
+
+  export const hideCompleted = () => ({
+      type: 'HIDE'
+  })
