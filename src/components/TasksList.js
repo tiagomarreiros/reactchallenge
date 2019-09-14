@@ -1,21 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux'
 
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import CommentIcon from '@material-ui/icons/Comment';
+// import IconButton from '@material-ui/core/IconButton';
+// import CommentIcon from '@material-ui/icons/Comment';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { withStyles } from '@material-ui/core/styles';
-
+import { bindActionCreators } from 'redux';
+import * as actionCreators from '../redux/actions/actionCreators';
 
 const styles = theme => ({
   
@@ -64,16 +65,16 @@ class TasksList extends React.Component {
           {
             tasks.tasks.map( (task, index) => (
           
-              <ListItem key={index} role={undefined} dense button /* onClick={handleToggle(value)} */ >
-              {/* <ListItemIcon>
+              <ListItem key={index} role={undefined} dense button onClick={() => this.props.toggleTask(task.id)} >
+              <ListItemIcon>
                 <Checkbox
                   edge="start"
-                  checked={checked.indexOf(value) !== -1}
+                  checked={task.completed}
                   tabIndex={-1}
                   disableRipple
-                  inputProps={{ 'aria-labelledby': labelId }}
+                  inputProps={{ 'aria-labelledby': index }}
                 />
-              </ListItemIcon> */}
+              </ListItemIcon>
               <ListItemText id={index} primary={task.name} />
               <ListItemSecondaryAction>
                   <Button variant="contained" color="primary" className={classes.button}>
@@ -100,8 +101,11 @@ const mapStateToProps = state => ({
   tasks: state.tasks
 })
 
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(actionCreators, dispatch);
+}
+
 export default connect(
   mapStateToProps,
-  null
-  //mapDispatchToProps
+  mapDispatchToProps
 )(withStyles(styles)(TasksList))
