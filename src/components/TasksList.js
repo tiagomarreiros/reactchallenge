@@ -23,7 +23,27 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../redux/actions/actionCreators';
 import { VisibilityFilters } from '../redux/actions/actionCreators';
 
-const getVisibleTasks = (tasks, filter) => {
+
+
+const getVisibilityFilter = (state) => state.visibilityFilter
+const getTasks = (state) => state.tasks
+
+export const getVisibleTasks = createSelector(
+  [ getVisibilityFilter, getTasks ],
+  (visibilityFilter, tasks) => {
+    switch (visibilityFilter) {
+      case VisibilityFilters.SHOW_ALL:
+        return tasks
+      case VisibilityFilters.SHOW_COMPLETED:
+        return {tasks: tasks.tasks.filter(tasks => !tasks.completed)}
+      default:
+        throw new Error('Unknown filter: ' + getVisibilityFilter)
+      
+    }
+  }
+)
+
+/* const getVisibleTasks = (tasks, filter) => {
   switch (filter) {
     case VisibilityFilters.SHOW_ALL:
       return tasks
@@ -32,7 +52,7 @@ const getVisibleTasks = (tasks, filter) => {
     default:
       throw new Error('Unknown filter: ' + filter)
   }
-}
+} */
 
 const styles = theme => ({
   
@@ -147,7 +167,8 @@ class TasksList extends React.Component {
   
 }
 const mapStateToProps = state => ({
-  tasks: getVisibleTasks(state.tasks, state.visibilityFilter)
+  // tasks: getVisibleTasks(state.tasks, state.visibilityFilter)
+  tasks: getVisibleTasks(state)
 })
 
 const mapDispatchToProps = (dispatch) => {
