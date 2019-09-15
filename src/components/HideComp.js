@@ -29,7 +29,10 @@ function HideComp(props) {
   const handleChange = name => event => {
     setState({ ...state, [name]: event.target.checked });
     if(state.checkedA === false){
-      props.hideCompleted()
+      props.setVisibilityFilter('SHOW_COMPLETED')
+    }
+    if(state.checkedA === true){
+      props.setVisibilityFilter('SHOW_ALL')
     }
   };
 
