@@ -53,7 +53,11 @@ const getSortList = createSelector(
     console.log('soooort',sortFilters)
     switch(sortFilter){
       case sortFilters.SORT_ID:
-        return tasks
+        return {
+          tasks: tasks.tasks.sort((a, b) => 
+                                  (a.id < b.id) ? 1 : -1
+                                  )}
+        
       case sortFilters.SORT_ASC:
         console.log('SORT ASC CASE')
         return { 
@@ -105,7 +109,8 @@ class TasksList extends React.Component {
       open: false,
       setOpen: false,
       text: '',
-      id: ''
+      id: '',
+      count: 0
     }
     this.handleClickOpen = this.handleClickOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
@@ -118,6 +123,10 @@ class TasksList extends React.Component {
   handleClose() {
     this.setState({setOpen: false})
   }
+  componentDidUpdate(){
+    if(this.state.count === 3) 
+      this.setState({count: 0})  
+  }
  
   render(){
     const { tasks, classes } = this.props
@@ -128,7 +137,13 @@ class TasksList extends React.Component {
       <List className={classes.root}
           subheader={
               <ListSubheader component="div" id="nested-list-subheader">
-              <Button className={classes.button} onClick={() => this.props.setSortList('SORT_ASC')} >Tasks</Button>
+                <Button className={classes.button} 
+                  onClick={() => {
+                        this.props.setSortList(this.state.count === 0 ? 'SORT_ASC' : this.state.count === 1 ? 'SORT_DESC' : this.state.count === 2 ? 'SORT_ID' : null) 
+                        this.setState({ count: this.state.count+1})                       
+                        }} >
+                  Tasks
+                </Button>
               </ListSubheader>
           }
       >
