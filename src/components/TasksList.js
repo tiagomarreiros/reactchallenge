@@ -22,13 +22,17 @@ import { withStyles } from '@material-ui/core/styles';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../redux/actions/actionCreators';
 import { VisibilityFilters } from '../redux/actions/actionCreators';
+import { sortFilters } from '../redux/actions/actionCreators';
+//import sortReducer from '../redux/reducers/sortReducer';
+import { switchCase } from '@babel/types';
 
 
 
 const getVisibilityFilter = (state) => state.visibilityFilter
 const getTasks = (state) => state.tasks
+const getSortFilter = (state) => state.sortFilter
 
-export const getVisibleTasks = createSelector(
+const getVisibleTasks = createSelector(
   [ getVisibilityFilter, getTasks ],
   (visibilityFilter, tasks) => {
     switch (visibilityFilter) {
@@ -42,6 +46,30 @@ export const getVisibleTasks = createSelector(
     }
   }
 )
+
+const getSortList = createSelector(
+  [getSortFilter, getTasks],
+  (sortFilter, tasks) => {
+    console.log('soooort',sortFilters)
+    switch(sortFilter){
+      case sortFilters.SORT_ID:
+        return tasks
+      case sortFilters.SORT_ASC:
+        console.log('SORT ASC CASE')
+        return { 
+          tasks: tasks.tasks.sort((a, b) => 
+                                  (a.name > b.name) ? 1 : -1
+                                  )}
+      case sortFilters.SORT_DESC:
+        return { 
+          tasks: tasks.tasks.sort((a, b) => 
+                              (a.name > b.name) ? 1 : -1).reverse()
+                            }    
+       default:
+          throw new Error('Unknown filter: ' + getSortFilter)
+    }
+  }
+) 
 
 /* const getVisibleTasks = (tasks, filter) => {
   switch (filter) {
@@ -93,14 +121,14 @@ class TasksList extends React.Component {
  
   render(){
     const { tasks, classes } = this.props
-
+    console.log('sortFilters', sortFilters.SORT_ID)
     console.log('list props', this.props)
     console.log('list state', this.state)
     return (
       <List className={classes.root}
           subheader={
               <ListSubheader component="div" id="nested-list-subheader">
-              <Button className={classes.button}>Tasks</Button>
+              <Button className={classes.button} onClick={() => this.props.setSortList('SORT_ASC')} >Tasks</Button>
               </ListSubheader>
           }
       >
@@ -168,7 +196,8 @@ class TasksList extends React.Component {
 }
 const mapStateToProps = state => ({
   // tasks: getVisibleTasks(state.tasks, state.visibilityFilter)
-  tasks: getVisibleTasks(state)
+  tasks: getVisibleTasks(state),
+  tasksSorted: getSortList(state)
 })
 
 const mapDispatchToProps = (dispatch) => {

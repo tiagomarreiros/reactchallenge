@@ -47,3 +47,16 @@ export const VisibilityFilters = {
     SHOW_ALL: 'SHOW_ALL',
     SHOW_COMPLETED: 'SHOW_COMPLETED',
   }
+
+  export const setSortList = (sort) =>({
+      type: 'SET_SORT_FILTER',
+      payload: {
+          sort
+      }
+  })
+
+export const sortFilters = {
+    SORT_ASC: 'SORT_ASC',
+    SORT_DESC: 'SORT_DESC',
+    SORT_ID: 'SORT_ID'
+}
