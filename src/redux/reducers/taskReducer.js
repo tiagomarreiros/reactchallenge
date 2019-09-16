@@ -1,4 +1,4 @@
-const taskReducer = (state = { tasks: [], edit: null }, action) => {
+const taskReducer = (state = { tasks: [], edit: {id: 0, name: ''} }, action) => {
     console.log('payload',action)
     
     switch(action.type){
@@ -45,7 +45,8 @@ const taskReducer = (state = { tasks: [], edit: null }, action) => {
                 tasks: state.tasks.map( task =>                  
                        
                     task.id === action.payload.id ?  { ...task, name: action.payload.text}  : task
-                )
+                ),
+                edit:{}
             }        
 
 

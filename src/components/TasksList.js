@@ -125,15 +125,18 @@ class TasksList extends React.Component {
   }
   componentDidUpdate(){
     if(this.state.count === 3) 
-      this.setState({count: 0})  
+      this.setState({count: 0})
+      
+    console.log('this.props.tasks.edit',this.props.tasks.edit)   
   }
+  
 
- /*  componentWillReceiveProps(){
-    if(this.props.edit.name !== undefined)
+ /* componentWillReceiveProps(){
+    if(this.props.tasks.edit !== {})
       this.setState({
-        text: this.props.edit.name
+        text: this.props.tasks.edit.name
       })
-  } */
+  }  */
  
   render(){
     const { tasks, classes } = this.props
@@ -187,6 +190,7 @@ class TasksList extends React.Component {
                     <DialogActions>
                       <Button onClick={() => {
                         this.props.updateTask(tasks.edit.id, this.state.text)
+                        this.setState({text: ''})
                         this.handleClose()
                       }} color="primary">
                         Update
