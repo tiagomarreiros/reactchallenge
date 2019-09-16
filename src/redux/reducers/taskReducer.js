@@ -1,22 +1,17 @@
 const taskReducer = (state = { tasks: [], edit: {id: 0, name: ''} }, action) => {
     console.log('payload',action)
-    
+    const Immutable = require('immutable');
     switch(action.type){
         case 'ADD':
             const { task, id } = action.payload
+            const taskList = [{id: id, name: task, completed: false}, ...state.tasks]
                 return { 
+                    //tasks: Immutable.List(taskList),
+                    //edit: Immutable.Map({})
                     tasks: [{id: id, name: task, completed: false}, ...state.tasks],
                     edit: {}
+                    
                 } 
-            // console.log('payload task', action.payload)
-            //const task = action.payload.task;
-            
-            //let newState = Object.assign({}, state, {task})
-            //let newState = tasks: [task, ...state.tasks]
-            //console.log([...state, {done: false}])
-            //console.log('newstate', newState);
-            // return [...state, {done: false}]
-            //return newState
         case 'TOGGLE':
                 console.log('reducer state',state.tasks, action.payload.id )
                 return {
