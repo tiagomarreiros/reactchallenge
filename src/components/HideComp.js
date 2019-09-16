@@ -1,24 +1,11 @@
 import React from 'react';
-// import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-//import { getThemeProps } from '@material-ui/styles';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../redux/actions/actionCreators';
 
-/* const GreenCheckbox = withStyles({
-  root: {
-    display: "flex",
-    justifyContent: "space-between",
-    color: green[400],
-    '&$checked': {
-      color: green[600],
-    },
-  },
-  checked: {},
-})(props => <Checkbox color="default" {...props} />);  */
 
 function HideComp(props) {
   const [state, setState] = React.useState({

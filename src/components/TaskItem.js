@@ -25,13 +25,6 @@ const styles = theme => ({
   });
 
 class TaskItem extends React.Component{
-    /* constructor(props){
-        super(props)
-        this.state = {
-            text: '',
-            id: ''
-        }
-    } */
 
     render(){
         const { key, taskId, taskCompleted, taskName, toggleTask, handleClickOpen, deleteTask, editTask, classes} = this.props;
@@ -48,9 +41,7 @@ class TaskItem extends React.Component{
               </ListItemIcon>
               <ListItemText id={key} primary={taskName} />
               <ListItemSecondaryAction>
-                  <Button variant="contained" color="primary" className={classes.button} onClick={() => {
-                    
-                    //this.setState({text: taskName, id: taskId})
+                  <Button variant="contained" color="primary" className={classes.button} onClick={() => {                   
                     editTask(taskId, taskName)
                     handleClickOpen()
                     }}>

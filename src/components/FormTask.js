@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../redux/actions/actionCreators';
-//import AddButton from './AddButton';
 
 const styles = theme => ({
     container: {
@@ -42,12 +41,6 @@ const styles = theme => ({
         }
     };
        
-    /* componentWillReceiveProps(){
-
-      if(this.props.edit.name !== null)
-        this.setState({task: this.props.edit.name})
-      return null  
-    } */
   
     render(){
        
@@ -68,7 +61,6 @@ const styles = theme => ({
                 margin="normal"
                 variant="outlined"
                 value={task}
-                //value={task}
               />
               <Button variant="contained" color="primary" className={classes.button} 
                       onClick={() => {
@@ -79,7 +71,6 @@ const styles = theme => ({
                       >
                 Create
               </Button>
-              {/* <AddButton onClick={this.props.addItem(item)} /> */}
           </form>
         );
     }
@@ -87,7 +78,6 @@ const styles = theme => ({
   FormTask.propTypes = {
     classes: PropTypes.object.isRequired,
   };
-  // export default withStyles(styles)(AddField);
 
   const mapDispatchToProps = (dispatch) => {
     return bindActionCreators(actionCreators, dispatch);
