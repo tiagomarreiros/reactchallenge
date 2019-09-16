@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { createSelector } from 'reselect'
 
 import List from '@material-ui/core/List';
 import Dialog from '@material-ui/core/Dialog';
@@ -13,57 +12,10 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import { withStyles } from '@material-ui/core/styles';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../redux/actions/actionCreators';
-import { VisibilityFilters } from '../redux/actions/actionCreators';
-import { sortFilters } from '../redux/actions/actionCreators';
 import TaskItem from './TaskItem';
+import { getVisibleTasks, getSortList } from '../redux/selectors';
 
 
-const getVisibilityFilter = (state) => state.visibilityFilter
-const getTasks = (state) => state.tasks
-const getSortFilter = (state) => state.sortFilter
-
-const getVisibleTasks = createSelector(
-  [ getVisibilityFilter, getTasks ],
-  (visibilityFilter, tasks) => {
-    switch (visibilityFilter) {
-      case VisibilityFilters.SHOW_ALL:
-        return tasks
-      case VisibilityFilters.SHOW_COMPLETED:
-        return {tasks: tasks.tasks.filter(tasks => !tasks.completed)}
-      default:
-        throw new Error('Unknown filter: ' + getVisibilityFilter)
-      
-    }
-  }
-)
-
-const getSortList = createSelector(
-  [getSortFilter, getTasks],
-  (sortFilter, tasks) => {
-    console.log('soooort',sortFilters)
-    switch(sortFilter){
-      case sortFilters.SORT_ID:
-        return {
-          tasks: tasks.tasks.sort((a, b) => 
-                                  (a.id < b.id) ? 1 : -1
-                                  )}
-        
-      case sortFilters.SORT_ASC:
-        console.log('SORT ASC CASE')
-        return { 
-          tasks: tasks.tasks.sort((a, b) => 
-                                  (a.name > b.name) ? 1 : -1
-                                  )}
-      case sortFilters.SORT_DESC:
-        return { 
-          tasks: tasks.tasks.sort((a, b) => 
-                              (a.name > b.name) ? 1 : -1).reverse()
-                            }    
-       default:
-          throw new Error('Unknown filter: ' + getSortFilter)
-    }
-  }
-) 
 
 const styles = theme => ({
   
@@ -111,7 +63,6 @@ class TasksList extends React.Component {
   
   render(){
     const { tasks, classes } = this.props
-    console.log('sortFilters', sortFilters.SORT_ID)
     console.log('list props', this.props)
     console.log('list state', this.state)
     return (
@@ -174,7 +125,7 @@ class TasksList extends React.Component {
   }
   
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   // tasks: getVisibleTasks(state.tasks, state.visibilityFilter)
   tasks: getVisibleTasks(state),
   tasksSorted: getSortList(state)
