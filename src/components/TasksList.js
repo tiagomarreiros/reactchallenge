@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
+//import ListItem from '@material-ui/core/ListItem';
+//import ListItemIcon from '@material-ui/core/ListItemIcon';
+//import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+//import ListItemText from '@material-ui/core/ListItemText';
+//import Checkbox from '@material-ui/core/Checkbox';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -15,8 +15,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 
 import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+//import DeleteIcon from '@material-ui/icons/Delete';
+//import EditIcon from '@material-ui/icons/Edit';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { withStyles } from '@material-ui/core/styles';
 import { bindActionCreators } from 'redux';
@@ -24,8 +24,8 @@ import * as actionCreators from '../redux/actions/actionCreators';
 import { VisibilityFilters } from '../redux/actions/actionCreators';
 import { sortFilters } from '../redux/actions/actionCreators';
 //import sortReducer from '../redux/reducers/sortReducer';
-import { switchCase } from '@babel/types';
-
+//import { switchCase } from '@babel/types';
+import TaskItem from './TaskItem';
 
 
 const getVisibilityFilter = (state) => state.visibilityFilter
@@ -127,6 +127,13 @@ class TasksList extends React.Component {
     if(this.state.count === 3) 
       this.setState({count: 0})  
   }
+
+ /*  componentWillReceiveProps(){
+    if(this.props.edit.name !== undefined)
+      this.setState({
+        text: this.props.edit.name
+      })
+  } */
  
   render(){
     const { tasks, classes } = this.props
@@ -150,37 +157,20 @@ class TasksList extends React.Component {
         
           {
             tasks.tasks.map( (task, index) => (
-          
-              <ListItem key={index} role={undefined} dense button onClick={() => this.props.toggleTask(task.id)} >
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={task.completed}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ 'aria-labelledby': index }}
+
+              <TaskItem 
+                key={index} 
+                toggleTask={this.props.toggleTask} 
+                handleClickOpen={this.handleClickOpen}
+                taskId={task.id}
+                taskCompleted={task.completed}
+                taskName={task.name}
+                deleteTask={this.props.deleteTask}
+                editTask={this.props.editTask}
                 />
-              </ListItemIcon>
-              <ListItemText id={index} primary={task.name} />
-              <ListItemSecondaryAction>
-                  <Button variant="contained" color="primary" className={classes.button} onClick={() => {
-                    this.handleClickOpen()
-                    this.setState({text: task.name, id: task.id})
-                    }}>
-                      Edit
-                      <EditIcon className={classes.rightIcon} />
-                  </Button>
-                  <Button variant="contained" color="secondary" className={classes.button} onClick={ () => this.props.deleteTask(task.id)}>
-                      Delete
-                      <DeleteIcon className={classes.rightIcon} />
-                  </Button>
-              </ListItemSecondaryAction>
-            </ListItem>
-  
-          )          
-          
-        )}
-        <Dialog open={this.state.setOpen} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+                ))}
+                     
+              <Dialog open={this.state.setOpen} onClose={this.handleClose} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Update</DialogTitle>
                     <DialogContent>
                       <TextField
@@ -196,7 +186,7 @@ class TasksList extends React.Component {
                     </DialogContent>
                     <DialogActions>
                       <Button onClick={() => {
-                        this.props.updateTask(this.state.id, this.state.text)
+                        this.props.updateTask(tasks.edit.id, this.state.text)
                         this.handleClose()
                       }} color="primary">
                         Update
@@ -223,3 +213,33 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withStyles(styles)(TasksList))
+
+
+
+{/* <ListItem key={index} role={undefined} dense button onClick={() => this.props.toggleTask(task.id)} >
+              <ListItemIcon>
+                <Checkbox
+                  edge="start"
+                  checked={task.completed}
+                  tabIndex={-1}
+                  disableRipple
+                  inputProps={{ 'aria-labelledby': index }}
+                />
+              </ListItemIcon>
+              <ListItemText id={index} primary={task.name} />
+              <ListItemSecondaryAction>
+                  <Button variant="contained" color="primary" className={classes.button} onClick={() => {
+                    this.handleClickOpen()
+                    this.setState({text: task.name, id: task.id})
+                    }}>
+                      Edit
+                      <EditIcon className={classes.rightIcon} />
+                  </Button>
+                  <Button variant="contained" color="secondary" className={classes.button} onClick={ () => this.props.deleteTask(task.id)}>
+                      Delete
+                      <DeleteIcon className={classes.rightIcon} />
+                  </Button>
+              </ListItemSecondaryAction>
+            </ListItem>
+  
+          ) */}          

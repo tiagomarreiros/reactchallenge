@@ -1,0 +1,75 @@
+import React from 'react';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import Checkbox from '@material-ui/core/Checkbox';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+  
+    root: {
+      width: '100%',
+      maxWidth: 600,
+      backgroundColor: theme.palette.background.paper,
+    },
+    button: {
+      margin: theme.spacing(1),
+    },
+    input: {
+      display: 'none',
+    },
+  });
+
+class TaskItem extends React.Component{
+    /* constructor(props){
+        super(props)
+        this.state = {
+            text: '',
+            id: ''
+        }
+    } */
+
+    render(){
+        const { key, taskId, taskCompleted, taskName, toggleTask, handleClickOpen, deleteTask, editTask, classes} = this.props;
+        return(
+            <ListItem key={key} role={undefined} dense button onClick={() => toggleTask(taskId)} >
+              <ListItemIcon>
+                <Checkbox
+                  edge="start"
+                  checked={taskCompleted}
+                  tabIndex={-1}
+                  disableRipple
+                  inputProps={{ 'aria-labelledby': key }}
+                />
+              </ListItemIcon>
+              <ListItemText id={key} primary={taskName} />
+              <ListItemSecondaryAction>
+                  <Button variant="contained" color="primary" className={classes.button} onClick={() => {
+                    
+                    //this.setState({text: taskName, id: taskId})
+                    editTask(taskId, taskName)
+                    handleClickOpen()
+                    }}>
+                      Edit
+                      <EditIcon className={classes.rightIcon} />
+                  </Button>
+                  <Button variant="contained" color="secondary" className={classes.button} onClick={ () => deleteTask(taskId)}>
+                      Delete
+                      <DeleteIcon className={classes.rightIcon} />
+                  </Button>
+              </ListItemSecondaryAction>
+            </ListItem>
+            
+        );
+    }
+
+    
+  
+          
+}
+
+export default withStyles(styles)(TaskItem);

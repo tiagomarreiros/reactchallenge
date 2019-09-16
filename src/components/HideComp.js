@@ -3,7 +3,7 @@ import React from 'react';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { getThemeProps } from '@material-ui/styles';
+//import { getThemeProps } from '@material-ui/styles';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../redux/actions/actionCreators';

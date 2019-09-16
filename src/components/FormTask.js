@@ -100,4 +100,4 @@ const styles = theme => ({
   export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )( withStyles(styles)(FormTask))
+  )(withStyles(styles)(FormTask))
