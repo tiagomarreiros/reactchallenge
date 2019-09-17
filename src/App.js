@@ -1,14 +1,15 @@
 import React from 'react';
-import FormTask from './components/FormTask';
-import TasksList from './components/TasksList';
-import HideComp from './components/HideComp';
+import TasksListContainer from './containers/TasksListContainer';
+import HideCompContainer from './containers/HideCompContainer';
+import FormTaskContainer from './containers/FormTaskContainer';
+
 
 function App() {
   return (
     <div className="App">
-      <FormTask />
-      <TasksList />
-      <HideComp />
+      <FormTaskContainer />
+      <TasksListContainer />
+      <HideCompContainer />
     </div>
   );
 }

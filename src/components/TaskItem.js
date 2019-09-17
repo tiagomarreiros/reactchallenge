@@ -8,21 +8,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import styles from '../styles/styleComps';
 
-const styles = theme => ({
-  
-    root: {
-      width: '100%',
-      maxWidth: 600,
-      backgroundColor: theme.palette.background.paper,
-    },
-    button: {
-      margin: theme.spacing(1),
-    },
-    input: {
-      display: 'none',
-    },
-  });
 
 class TaskItem extends React.Component{
 

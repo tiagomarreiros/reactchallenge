@@ -25,7 +25,6 @@ export const getVisibleTasks = createSelector(
   export const getSortList = createSelector(
     [getSortFilter, getTasks],
     (sortFilter, tasks) => {
-      console.log('soooort',sortFilters)
       switch(sortFilter){
         case sortFilters.SORT_ID:
           return {
@@ -34,7 +33,6 @@ export const getVisibleTasks = createSelector(
                                     )}
           
         case sortFilters.SORT_ASC:
-          console.log('SORT ASC CASE')
           return { 
             tasks: tasks.tasks.sort((a, b) => 
                                     (a.name > b.name) ? 1 : -1

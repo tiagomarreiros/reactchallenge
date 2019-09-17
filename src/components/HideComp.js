@@ -2,9 +2,6 @@ import React from 'react';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux';
-import * as actionCreators from '../redux/actions/actionCreators';
 
 
 function HideComp(props) {
@@ -12,7 +9,6 @@ function HideComp(props) {
     checkedA: false,
     
   });
-  console.log('Hidecomp props', props)
   const handleChange = name => event => {
     setState({ ...state, [name]: event.target.checked });
     if(state.checkedA === false){
@@ -36,11 +32,5 @@ function HideComp(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(actionCreators, dispatch);
-}
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(HideComp)
+export default HideComp

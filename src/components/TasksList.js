@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux'
 
 import List from '@material-ui/core/List';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,27 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { withStyles } from '@material-ui/core/styles';
-import { bindActionCreators } from 'redux';
-import * as actionCreators from '../redux/actions/actionCreators';
 import TaskItem from './TaskItem';
-import { getVisibleTasks, getSortList } from '../redux/selectors';
-
-
-
-const styles = theme => ({
-  
-  root: {
-    width: '100%',
-    maxWidth: 600,
-    backgroundColor: theme.palette.background.paper,
-  },
-  button: {
-    margin: theme.spacing(1),
-  },
-  input: {
-    display: 'none',
-  },
-});
+import styles from '../styles/styleComps';
 
 class TasksList extends React.Component {
 
@@ -58,13 +38,10 @@ class TasksList extends React.Component {
     if(this.state.count === 3) 
       this.setState({count: 0})
       
-    console.log('this.props.tasks.edit',this.props.tasks.edit)   
   }
   
   render(){
     const { tasks, classes } = this.props
-    console.log('list props', this.props)
-    console.log('list state', this.state)
     return (
       <List className={classes.root}
           subheader={
@@ -125,18 +102,7 @@ class TasksList extends React.Component {
   }
   
 }
-const mapStateToProps = (state) => ({
-  // tasks: getVisibleTasks(state.tasks, state.visibilityFilter)
-  tasks: getVisibleTasks(state),
-  tasksSorted: getSortList(state)
-})
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(actionCreators, dispatch);
-}
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(TasksList))
+export default withStyles(styles)(TasksList)
    

@@ -1,14 +1,15 @@
-const Immutable = require('immutable');
+
+//const Immutable = require('immutable');
 
 //WITH IMMUTABLE JS ----------------------INCOMPLETED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-/* const tasksInitialState = Immutable.fromJS({
+ /* const tasksInitialState = Immutable.fromJS({
     tasks: [],
     edit: {id: 0, name: ''}
 })
 
 const testImmutable = (state = tasksInitialState, action) => {
-    const { task, id } = action.payload 
+    //const { id } = action.payload 
     switch(action.type){
         case 'ADD':  
             return state.tasks.push(Immutable.fromJS(action.payload))
@@ -18,21 +19,26 @@ const testImmutable = (state = tasksInitialState, action) => {
         case 'DELETE':
             return state.tasks.filter( task => task.id !== action.payload.id)
         case 'EDIT':
-            return null
+             state.tasks.findIndex((task)=> task.get('id') === action.payload.id); 
+             return state.tasks.setIn([0, 'text'], action.text);
         case 'UPDATE':
-            return null
+            return state.tasks.updateIn(
+                state.tasks.findIndex(
+                    (task) => { return task.get('id') === action.payload.id}
+                ), 
+                (task) => {
+                    return task.set('text', action.payload.text )
+                } )
         default:
             return state                    
     }
-}
- */
+} */
+ 
 
 /**********************************************************************************************************************/
 
 // WITHOUT IMMUTABLE JS
 const taskReducer = (state = { tasks: [], edit: {id: 0, name: ''} }, action) => {
-    console.log('payload',action)
-
 
     switch(action.type){
         case 'ADD':
@@ -45,7 +51,6 @@ const taskReducer = (state = { tasks: [], edit: {id: 0, name: ''} }, action) => 
                     
                 } 
         case 'TOGGLE':
-                console.log('reducer state',state.tasks, action.payload.id )
                 return {
                     tasks: state.tasks.map( task =>
                                           
@@ -75,6 +80,6 @@ const taskReducer = (state = { tasks: [], edit: {id: 0, name: ''} }, action) => 
 
          default: return state   
     }
-}
+} 
 
 export default taskReducer;
