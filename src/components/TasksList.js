@@ -34,14 +34,20 @@ class TasksList extends React.Component {
   handleClose() {
     this.setState({setOpen: false})
   }
+
+  componentWillMount(){
+    this.props.getAllTasks('ALL', 'DATE_ADDED')
+  }
   componentDidUpdate(){
     if(this.state.count === 3) 
       this.setState({count: 0})
       
   }
+
   
   render(){
     const { tasks, classes } = this.props
+    console.log('list props', this.props)
     return (
       <List className={classes.root}
           subheader={
@@ -66,7 +72,7 @@ class TasksList extends React.Component {
                 handleClickOpen={this.handleClickOpen}
                 taskId={task.id}
                 taskCompleted={task.completed}
-                taskName={task.name}
+                taskName={task.description}
                 deleteTask={this.props.deleteTask}
                 editTask={this.props.editTask}
                 />

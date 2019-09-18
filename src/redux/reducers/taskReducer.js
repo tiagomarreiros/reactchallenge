@@ -41,6 +41,15 @@ const testImmutable = (state = tasksInitialState, action) => {
 const taskReducer = (state = { tasks: [], edit: {id: 0, name: ''} }, action) => {
 
     switch(action.type){
+
+        case 'FETCH_TASKS':
+            console.log('action.payload.tasks', action.payload)
+            const tasks = action.payload
+            const newState = Object.assign({}, state, {tasks})
+
+            console.log('newState', newState)
+
+            return newState
         case 'ADD':
             const { task, id } = action.payload          
             

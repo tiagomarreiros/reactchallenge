@@ -10,6 +10,7 @@ import FormTask from '../components/FormTask';
         return (
          <FormTask 
             addTask={this.props.addTask}
+            putTasks={this.props.putTasks}
             edit={this.props.edit}
          />
         );

@@ -7,7 +7,9 @@ import TasksList from '../components/TasksList';
 
 class TasksListContainer extends React.Component {
 
+  
   render(){
+    console.log('container props', this.props)
     return (
         <TasksList 
             setSortList={this.props.setSortList}
@@ -15,7 +17,8 @@ class TasksListContainer extends React.Component {
             updateTask={this.props.updateTask}
             deleteTask={this.props.deleteTask}
             editTask={this.props.editTask}
-            toggleTask={this.props.toggleTask} 
+            toggleTask={this.props.toggleTask}
+            getAllTasks={this.props.getAllTasks} 
         />     
       );
 
@@ -23,7 +26,7 @@ class TasksListContainer extends React.Component {
   
 }
 const mapStateToProps = (state) => ({
-  // tasks: getVisibleTasks(state.tasks, state.visibilityFilter)
+
   tasks: getVisibleTasks(state),
   tasksSorted: getSortList(state),
   //testImmutable: state.testImmutable //test

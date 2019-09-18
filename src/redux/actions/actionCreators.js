@@ -1,5 +1,55 @@
 let taskId = 0
 
+export const getAllTasks = (filter, orderBy) => {
+    return (dispatch) => {
+        fetch(`http://localhost:3000/todos?filter=${filter}&orderBy=${orderBy}`, 
+                {
+                    method: 'GET', 
+                    mode: 'cors',
+                    headers: {
+                        'Accept': 'application/json',
+                        "Content-Type" : "application/json",
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Allow-Methods': "GET, PUT, POST, DELETE, PATCH"
+                    }
+                }
+            )
+            .then(res => res.json())
+            .then(tasks => {
+                dispatch({
+                    type: "FETCH_TASKS",
+                    payload: tasks
+                
+                })
+            })      
+    }
+}
+
+export const putTasks = (description) => {
+    return (dispatch) => {
+        fetch(`http://localhost:3000/todos`, 
+                {
+                    method: 'PUT', 
+                    mode: 'cors',
+                    headers: {
+                        'Accept': 'application/json',
+                        "Content-Type" : "application/json",
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Allow-Methods': "GET, PUT, POST, DELETE, PATCH"
+                    }
+                }
+            )
+            .then(res => res.json())
+            .then(() => {
+                dispatch({
+                    type: "FETCH_TASKS",
+                    payload: description
+                
+                })
+            })      
+    }
+}
+
 export const addTask = (task) => ({
     type: 'ADD',
     payload: {
