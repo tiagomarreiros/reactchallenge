@@ -1,24 +1,29 @@
 let taskId = 0
+const myHeaders= {
+    'Accept': 'application/json',
+    "Content-Type" : "application/json",
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Allow-Headers': 'origin, content-type, accept',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,PATCH,DELETE, OPTIONS'
+}
+const url = 'http://localhost:3000/todos'
+const url2 = 'http://localhost:3000/todo'
 
 export const getAllTasks = (filter, orderBy) => {
     return (dispatch) => {
-        fetch(`http://localhost:3000/todos?filter=${filter}&orderBy=${orderBy}`, 
+        fetch(`${url}?filter=${filter}&orderBy=${orderBy}`, 
                 {
                     method: 'GET', 
                     mode: 'cors',
-                    headers: {
-                        'Accept': 'application/json',
-                        "Content-Type" : "application/json",
-                        'Access-Control-Allow-Origin': '*',
-                        'Access-Control-Allow-Methods': "GET, PUT, POST, DELETE, PATCH"
-                    }
+                    headers: myHeaders
                 }
             )
             .then(res => res.json())
             .then(tasks => {
                 dispatch({
                     type: "FETCH_TASKS",
-                    payload: tasks
+                    payload: tasks || {}
                 
                 })
             })      
@@ -27,28 +32,75 @@ export const getAllTasks = (filter, orderBy) => {
 
 export const putTasks = (description) => {
     return (dispatch) => {
-        fetch(`http://localhost:3000/todos`, 
+        fetch(`${url}`, 
                 {
                     method: 'PUT', 
                     mode: 'cors',
-                    headers: {
-                        'Accept': 'application/json',
-                        "Content-Type" : "application/json",
-                        'Access-Control-Allow-Origin': '*',
-                        'Access-Control-Allow-Methods': "GET, PUT, POST, DELETE, PATCH"
-                    }
+                    headers: myHeaders,
+                    body: JSON.stringify({description: description})
                 }
             )
             .then(res => res.json())
-            .then(() => {
+            .then((description) => {
+                console.log('description', description)
                 dispatch({
-                    type: "FETCH_TASKS",
+                    type: "ADD",
                     payload: description
                 
                 })
             })      
     }
 }
+
+export const deleteTask = id => {
+    return (dispatch) => {
+        fetch(`${url2}/${id}`, 
+                {
+                    method: 'DELETE', 
+                    mode: 'cors',
+                    headers: myHeaders,
+                }
+            )
+            .then(res => res.json())
+            .then((id) => {
+                console.log('id', id)
+                dispatch({
+                    type: 'DELETE',
+                    payload: {
+                        id
+                    }
+                
+                })
+            })      
+    }
+}
+
+export const toggleTask = (id, stateTask) =>  {
+    return (dispatch) => {
+        fetch(`${url2}/${id}`, 
+                {
+                    method: 'PATCH', 
+                    mode: 'cors',
+                    headers: myHeaders,
+                    body: JSON.stringify({state: stateTask})
+                }
+            )
+            .then(res => res.json())
+            .then((id) => {
+                console.log('id', id)
+                dispatch({
+                        type: 'TOGGLE',
+                        payload: {
+                            id
+                        }               
+                    })
+            })      
+    }
+}
+    
+
+
+
 
 export const addTask = (task) => ({
     type: 'ADD',
@@ -58,19 +110,9 @@ export const addTask = (task) => ({
     }
 })
 
-export const toggleTask = id => ({
-    type: 'TOGGLE',
-    payload: {
-        id
-    }
-  })
 
-export const deleteTask = id => ({
-    type: 'DELETE',
-    payload: {
-        id
-    }
-})
+
+
 
 export const editTask = (id, name) => ({
     type: 'EDIT',

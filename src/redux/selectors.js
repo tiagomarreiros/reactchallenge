@@ -26,7 +26,9 @@ export const getVisibleTasks = createSelector(
     [getSortFilter, getTasks],
     (sortFilter, tasks) => {
       switch(sortFilter){
+        
         case sortFilters.SORT_ID:
+            console.log('sort id', tasks)
           return {
             tasks: tasks.tasks.sort((a, b) => 
                                     (a.id < b.id) ? 1 : -1
@@ -35,12 +37,12 @@ export const getVisibleTasks = createSelector(
         case sortFilters.SORT_ASC:
           return { 
             tasks: tasks.tasks.sort((a, b) => 
-                                    (a.name > b.name) ? 1 : -1
+                                    (a.description > b.description) ? 1 : -1
                                     )}
         case sortFilters.SORT_DESC:
           return { 
             tasks: tasks.tasks.sort((a, b) => 
-                                (a.name > b.name) ? 1 : -1).reverse()
+                                (a.description > b.description) ? 1 : -1).reverse()
                               }    
          default:
             throw new Error('Unknown filter: ' + getSortFilter)

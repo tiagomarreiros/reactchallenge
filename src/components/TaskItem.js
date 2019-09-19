@@ -16,7 +16,7 @@ class TaskItem extends React.Component{
     render(){
         const { key, taskId, taskCompleted, taskName, toggleTask, handleClickOpen, deleteTask, editTask, classes} = this.props;
         return(
-            <ListItem key={key} role={undefined} dense button onClick={() => toggleTask(taskId)} >
+            <ListItem key={key} role={undefined} dense button onClick={() => toggleTask(taskId, !taskCompleted)} >
               <ListItemIcon>
                 <Checkbox
                   edge="start"
