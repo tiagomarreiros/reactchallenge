@@ -2,10 +2,9 @@ let taskId = 0
 const myHeaders= {
     'Accept': 'application/json',
     "Content-Type" : "application/json",
-    'Access-Control-Allow-Credentials': 'true',
-    'Access-Control-Allow-Headers': 'origin, content-type, accept',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,PUT,POST,PATCH,DELETE, OPTIONS'
+    //'Access-Control-Allow-Credentials': 'true',
+    //'Access-Control-Allow-Origin': 'http://localhost:3001/',
+    //'Access-Control-Allow-Methods': 'GET,PUT,POST,PATCH,DELETE, OPTIONS'
 }
 const url = 'http://localhost:3000/todos'
 const url2 = 'http://localhost:3000/todo'
@@ -16,7 +15,7 @@ export const getAllTasks = (filter, orderBy) => {
                 {
                     method: 'GET', 
                     mode: 'cors',
-                    headers: myHeaders
+                    //headers: myHeaders
                 }
             )
             .then(res => res.json())
@@ -36,7 +35,7 @@ export const putTasks = (description) => {
                 {
                     method: 'PUT', 
                     mode: 'cors',
-                    headers: myHeaders,
+                    //headers: myHeaders,
                     body: JSON.stringify({description: description})
                 }
             )
@@ -58,7 +57,7 @@ export const deleteTask = id => {
                 {
                     method: 'DELETE', 
                     mode: 'cors',
-                    headers: myHeaders,
+                    //headers: myHeaders,
                 }
             )
             .then(res => res.json())
@@ -81,7 +80,7 @@ export const toggleTask = (id, stateTask) =>  {
                 {
                     method: 'PATCH', 
                     mode: 'cors',
-                    headers: myHeaders,
+                    //headers: myHeaders,
                     body: JSON.stringify({state: stateTask})
                 }
             )
