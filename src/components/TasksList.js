@@ -37,6 +37,7 @@ class TasksList extends React.Component {
 
   componentWillMount(){
     this.props.getAllTasks('ALL', 'DATE_ADDED')
+    console.log('WILL MOUNT')
   }
   componentDidUpdate(){
     if(this.state.count === 3) 
@@ -71,7 +72,7 @@ class TasksList extends React.Component {
                 toggleTask={this.props.toggleTask} 
                 handleClickOpen={this.handleClickOpen}
                 taskId={task.id}
-                taskCompleted={task.completed}
+                taskCompleted={task.state}
                 taskName={task.description}
                 deleteTask={this.props.deleteTask}
                 editTask={this.props.editTask}

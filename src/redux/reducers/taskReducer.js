@@ -38,7 +38,7 @@ const testImmutable = (state = tasksInitialState, action) => {
 /**********************************************************************************************************************/
 
 // WITHOUT IMMUTABLE JS
-const taskReducer = (state = { tasks: [], edit: {id: 0, name: ''} }, action) => {
+const taskReducer = (state = { tasks: [], edit: {id: 0, description: ''} }, action) => {
     console.log('action.payload', action.payload)
 
     switch(action.type){
@@ -59,14 +59,19 @@ const taskReducer = (state = { tasks: [], edit: {id: 0, name: ''} }, action) => 
                 return newStateTask
 
         case 'TOGGLE':
+
                 return {
                     tasks: state.tasks.map( task =>
                                           
-                            task.id === action.payload.id ?  { ...task, completed: !task.completed}  : task
+                            task.id === action.payload.id ?  { ...task, state: action.payload.state}  : task
                                                                          
                     ) 
                 } 
         case 'DELETE':
+            const newTaks = state.tasks.filter( task => {
+                console.log('task.id, action.payload', task.id, action.payload.id) 
+                return(task.id !== action.payload.id)})
+            console.log('newTaks', newTaks)
              return {
                 tasks: state.tasks.filter( task => task.id !== action.payload.id)
              }  
@@ -74,7 +79,7 @@ const taskReducer = (state = { tasks: [], edit: {id: 0, name: ''} }, action) => 
         case 'EDIT':
             return{ 
                 tasks: state.tasks,
-                edit: {id: action.payload.id, name: action.payload.name}
+                edit: {id: action.payload.id, description: action.payload.description}
                 }
         case 'UPDATE':
             return{

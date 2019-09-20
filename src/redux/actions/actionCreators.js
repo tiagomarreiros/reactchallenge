@@ -1,4 +1,3 @@
-let taskId = 0
 const myHeaders= {
     'Accept': 'application/json',
     "Content-Type" : "application/json",
@@ -20,6 +19,7 @@ export const getAllTasks = (filter, orderBy) => {
             )
             .then(res => res.json())
             .then(tasks => {
+                console.log('getTasks', tasks)
                 dispatch({
                     type: "FETCH_TASKS",
                     payload: tasks || {}
@@ -61,12 +61,13 @@ export const deleteTask = id => {
                 }
             )
             .then(res => res.json())
-            .then((id) => {
-                console.log('id', id)
+            .then((dTask) => {
+                const { id } = dTask
                 dispatch({
                     type: 'DELETE',
                     payload: {
                         id
+                        
                     }
                 
                 })
@@ -74,26 +75,32 @@ export const deleteTask = id => {
     }
 }
 
-export const toggleTask = (id, stateTask) =>  {
+export const toggleTask = (id, stateTask, description) =>  {
+    console.log('id, stateTask, description', id, stateTask, description)
     return (dispatch) => {
         fetch(`${url2}/${id}`, 
                 {
                     method: 'PATCH', 
                     mode: 'cors',
                     //headers: myHeaders,
-                    body: JSON.stringify({state: stateTask})
+                    body: JSON.stringify({state: stateTask, description: description})
                 }
             )
             .then(res => res.json())
-            .then((id) => {
-                console.log('id', id)
+            .then((toggle) => {
+                console.log('toogleTask', toggle)
+                const { id, state } = toggle
                 dispatch({
                         type: 'TOGGLE',
                         payload: {
-                            id
+                            id,
+                            state
                         }               
                     })
-            })      
+            })  
+            .catch(error => {
+                console.log('TOGGLE ERROR::', error)
+            })    
     }
 }
     
@@ -101,23 +108,23 @@ export const toggleTask = (id, stateTask) =>  {
 
 
 
-export const addTask = (task) => ({
+/* export const addTask = (task) => ({
     type: 'ADD',
     payload: {
         task,
         id: taskId++
     }
-})
+}) */
 
 
 
 
 
-export const editTask = (id, name) => ({
+export const editTask = (id, description) => ({
     type: 'EDIT',
     payload: {
         id,
-        name,
+        description,
     }
 })
 

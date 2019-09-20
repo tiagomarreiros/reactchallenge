@@ -12,15 +12,17 @@ import styles from '../styles/styleComps';
 
 
 class TaskItem extends React.Component{
-
+  
     render(){
+      console.log('TaskItem props', this.props)
+
         const { key, taskId, taskCompleted, taskName, toggleTask, handleClickOpen, deleteTask, editTask, classes} = this.props;
         return(
-            <ListItem key={key} role={undefined} dense button onClick={() => toggleTask(taskId, !taskCompleted)} >
+            <ListItem key={key} role={undefined} dense button onClick={() => toggleTask(taskId,taskCompleted === 'INCOMPLETE' ? 'COMPLETE' : 'INCOMPLETE' , taskName)} >
               <ListItemIcon>
                 <Checkbox
                   edge="start"
-                  checked={taskCompleted}
+                  checked={taskCompleted === 'INCOMPLETE' ? false : true}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ 'aria-labelledby': key }}

@@ -14,7 +14,7 @@ export const getVisibleTasks = createSelector(
         case VisibilityFilters.SHOW_ALL:
           return tasks
         case VisibilityFilters.SHOW_COMPLETED:
-          return {tasks: tasks.tasks.filter(tasks => !tasks.completed)}
+          return {tasks: tasks.tasks.filter(tasks => tasks.state === 'INCOMPLETE')}
         default:
           throw new Error('Unknown filter: ' + getVisibilityFilter)
         
