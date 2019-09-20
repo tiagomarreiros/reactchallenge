@@ -103,6 +103,36 @@ export const toggleTask = (id, stateTask, description) =>  {
             })    
     }
 }
+
+export const updateTask = (id, stateTask, description) =>  {
+    console.log('id, stateTask, description', id, stateTask, description)
+    return (dispatch) => {
+        fetch(`${url2}/${id}`, 
+                {
+                    method: 'PATCH', 
+                    mode: 'cors',
+                    //headers: myHeaders,
+                    body: JSON.stringify({state: stateTask, description: description})
+                }
+            )
+            .then(res => res.json())
+            .then((update) => {
+                console.log('updateTask', update)
+                const { id, description, state } = update
+                dispatch({
+                        type: 'UPDATE',
+                        payload: {
+                            id,
+                            state,
+                            description
+                        }               
+                    })
+            })  
+            .catch(error => {
+                console.log('UPDATE ERROR::', error)
+            })    
+    }
+}
     
 
 
@@ -120,21 +150,22 @@ export const toggleTask = (id, stateTask, description) =>  {
 
 
 
-export const editTask = (id, description) => ({
+export const editTask = (id, taskState, description) => ({
     type: 'EDIT',
     payload: {
         id,
+        taskState,
         description,
     }
 })
 
-export const updateTask = (id, text) => ({
+/* export const updateTask = (id, text) => ({
     type: 'UPDATE',
     payload: {
         id,
         text
     }
-})
+}) */
 
 export const setVisibilityFilter = filter => ({
     type: 'SET_VISIBILITY_FILTER',

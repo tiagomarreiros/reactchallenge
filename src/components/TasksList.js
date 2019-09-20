@@ -37,7 +37,6 @@ class TasksList extends React.Component {
 
   componentWillMount(){
     this.props.getAllTasks('ALL', 'DATE_ADDED')
-    console.log('WILL MOUNT')
   }
   componentDidUpdate(){
     if(this.state.count === 3) 
@@ -50,6 +49,10 @@ class TasksList extends React.Component {
     const { tasks, classes } = this.props
     console.log('list props', this.props)
     return (
+      
+      tasks.loading === false ? 
+      <div>Loading....</div>
+      :
       <List className={classes.root}
           subheader={
               <ListSubheader component="div" id="nested-list-subheader">
@@ -95,7 +98,7 @@ class TasksList extends React.Component {
                     </DialogContent>
                     <DialogActions>
                       <Button onClick={() => {
-                        this.props.updateTask(tasks.edit.id, this.state.text)
+                        this.props.updateTask(tasks.edit.id, tasks.edit.taskState, this.state.text)
                         this.setState({text: ''})
                         this.handleClose()
                       }} color="primary">
@@ -104,6 +107,7 @@ class TasksList extends React.Component {
                     </DialogActions>
                   </Dialog>
       </List>
+                    
       );
 
   }

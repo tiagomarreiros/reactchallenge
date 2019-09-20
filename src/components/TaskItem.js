@@ -31,7 +31,7 @@ class TaskItem extends React.Component{
               <ListItemText id={key} primary={taskName} />
               <ListItemSecondaryAction>
                   <Button variant="contained" color="primary" className={classes.button} onClick={() => {                   
-                    editTask(taskId, taskName)
+                    editTask(taskId, taskCompleted, taskName)
                     handleClickOpen()
                     }}>
                       Edit
