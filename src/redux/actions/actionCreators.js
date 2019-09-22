@@ -1,10 +1,4 @@
-const myHeaders= {
-    'Accept': 'application/json',
-    "Content-Type" : "application/json",
-    //'Access-Control-Allow-Credentials': 'true',
-    //'Access-Control-Allow-Origin': 'http://localhost:3001/',
-    //'Access-Control-Allow-Methods': 'GET,PUT,POST,PATCH,DELETE, OPTIONS'
-}
+
 const url = 'http://localhost:3000/todos'
 const url2 = 'http://localhost:3000/todo'
 
@@ -19,7 +13,6 @@ export const getAllTasks = (filter, orderBy) => {
             )
             .then(res => res.json())
             .then(tasks => {
-                console.log('getTasks', tasks)
                 dispatch({
                     type: "FETCH_TASKS",
                     payload: tasks || {}
@@ -41,7 +34,6 @@ export const putTasks = (description) => {
             )
             .then(res => res.json())
             .then((description) => {
-                console.log('description', description)
                 dispatch({
                     type: "ADD",
                     payload: description
@@ -117,7 +109,6 @@ export const updateTask = (id, stateTask, description) =>  {
             )
             .then(res => res.json())
             .then((update) => {
-                console.log('updateTask', update)
                 const { id, description, state } = update
                 dispatch({
                         type: 'UPDATE',
@@ -134,21 +125,12 @@ export const updateTask = (id, stateTask, description) =>  {
     }
 }
     
-
-
-
-
-/* export const addTask = (task) => ({
-    type: 'ADD',
+export const setLoading = (loading) => ({
+    type: 'LOADING',
     payload: {
-        task,
-        id: taskId++
+        loading
     }
-}) */
-
-
-
-
+}) 
 
 export const editTask = (id, taskState, description) => ({
     type: 'EDIT',
@@ -158,14 +140,6 @@ export const editTask = (id, taskState, description) => ({
         description,
     }
 })
-
-/* export const updateTask = (id, text) => ({
-    type: 'UPDATE',
-    payload: {
-        id,
-        text
-    }
-}) */
 
 export const setVisibilityFilter = filter => ({
     type: 'SET_VISIBILITY_FILTER',

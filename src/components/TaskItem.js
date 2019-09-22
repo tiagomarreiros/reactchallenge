@@ -17,8 +17,13 @@ class TaskItem extends React.Component{
       console.log('TaskItem props', this.props)
 
         const { key, taskId, taskCompleted, taskName, toggleTask, handleClickOpen, deleteTask, editTask, classes} = this.props;
-        return(
-            <ListItem key={key} role={undefined} dense button onClick={() => toggleTask(taskId,taskCompleted === 'INCOMPLETE' ? 'COMPLETE' : 'INCOMPLETE' , taskName)} >
+             
+        return(         
+            <ListItem key={key} role={undefined} dense button 
+                        onClick={() => {
+                          this.props.setLoading(true)
+                          toggleTask(taskId,taskCompleted === 'INCOMPLETE' ? 'COMPLETE' : 'INCOMPLETE' , taskName)
+                          }} >
               <ListItemIcon>
                 <Checkbox
                   edge="start"
@@ -37,13 +42,17 @@ class TaskItem extends React.Component{
                       Edit
                       <EditIcon className={classes.rightIcon} />
                   </Button>
-                  <Button variant="contained" color="secondary" className={classes.button} onClick={ () => deleteTask(taskId)}>
-                      Delete
+                  <Button variant="contained" color="secondary" className={classes.button} 
+                        onClick={ () =>{ 
+                          this.props.setLoading(true)
+                          deleteTask(taskId)
+                          }}>
+                        Delete
                       <DeleteIcon className={classes.rightIcon} />
                   </Button>
               </ListItemSecondaryAction>
             </ListItem>
-            
+                        
         );
     }
 

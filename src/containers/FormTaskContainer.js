@@ -12,6 +12,7 @@ import FormTask from '../components/FormTask';
             addTask={this.props.addTask}
             putTasks={this.props.putTasks}
             edit={this.props.edit}
+            setLoading={this.props.setLoading}
          />
         );
     }

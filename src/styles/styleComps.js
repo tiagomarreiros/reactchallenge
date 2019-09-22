@@ -27,6 +27,9 @@ const styles = theme => ({
       menu: {
         width: 200,
       },
+      progress: {
+        margin: theme.spacing(2),
+      },
   });
 
   export default styles;

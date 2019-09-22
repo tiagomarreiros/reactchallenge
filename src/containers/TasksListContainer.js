@@ -18,7 +18,8 @@ class TasksListContainer extends React.Component {
             deleteTask={this.props.deleteTask}
             editTask={this.props.editTask}
             toggleTask={this.props.toggleTask}
-            getAllTasks={this.props.getAllTasks} 
+            getAllTasks={this.props.getAllTasks}
+            setLoading={this.props.setLoading} 
         />     
       );
 
@@ -29,7 +30,6 @@ const mapStateToProps = (state) => ({
 
   tasks: getVisibleTasks(state),
   tasksSorted: getSortList(state),
-  //testImmutable: state.testImmutable //test
 })
 
 const mapDispatchToProps = (dispatch) => {

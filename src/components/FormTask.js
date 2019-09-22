@@ -33,6 +33,7 @@ import styles from '../styles/styleComps';
               />
               <Button variant="contained" color="primary" className={classes.button} 
                       onClick={() => {
+                        this.props.setLoading(true)
                         this.props.putTasks(task)
                         this.setState({task: ''})
                       } 

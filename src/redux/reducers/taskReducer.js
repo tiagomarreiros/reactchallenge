@@ -38,48 +38,40 @@ const testImmutable = (state = tasksInitialState, action) => {
 /**********************************************************************************************************************/
 
 // WITHOUT IMMUTABLE JS
-const taskReducer = (state = { tasks: [], edit: {id: 0, taskState: 'INCOMPLETE', description: ''}, loading: true }, action) => {
+const taskReducer = (state = { tasks: [], edit: {id: 0, taskState: 'INCOMPLETE', description: ''}, loading: false }, action) => {
     console.log('action.payload', action.payload)
 
     switch(action.type){
 
         case 'FETCH_TASKS':
             const tasks = action.payload
-            const newState = Object.assign({}, state, {tasks, loading: true})
-
-            console.log('newState', newState)
+            const newState = Object.assign({}, state, {tasks, loading: false})
 
             return newState
             
         case 'ADD':
             const description = action.payload
-            const newStateTask = Object.assign({}, state, {tasks: [description, ...state.tasks]} )
-            console.log('newStateTask', newStateTask)
+            const newStateTask = Object.assign({}, state, {tasks: [description, ...state.tasks], loading: false} )
 
                 return newStateTask
 
         case 'TOGGLE':
-
-                return {
-                    tasks: state.tasks.map( task =>
-                                          
-                            task.id === action.payload.id ?  { ...task, state: action.payload.state}  : task
-                                                                         
-                    ) 
-                } 
+                const tasksMapToggle = state.tasks.map( task =>                                        
+                    task.id === action.payload.id ?  { ...task, state: action.payload.state}  : task                                                               
+                    )
+                const newToogle = Object.assign({}, state, {tasks:tasksMapToggle, loading: false} )
+                return newToogle
+                
+               
         case 'DELETE':
-            const newTaks = state.tasks.filter( task => {
-                console.log('task.id, action.payload', task.id, action.payload.id) 
-                return(task.id !== action.payload.id)})
-            console.log('newTaks', newTaks)
-             return {
-                tasks: state.tasks.filter( task => task.id !== action.payload.id)
-             }  
+                const deleteState = Object.assign({}, state, {tasks: state.tasks.filter( task => task.id !== action.payload.id), loading: false })
+             return deleteState
 
         case 'EDIT':
             return{ 
                 tasks: state.tasks,
-                edit: {id: action.payload.id, taskState: action.payload.taskState, description: action.payload.description}
+                edit: {id: action.payload.id, taskState: action.payload.taskState, description: action.payload.description},
+                loading: false
                 }
         case 'UPDATE':
             return{
@@ -88,9 +80,15 @@ const taskReducer = (state = { tasks: [], edit: {id: 0, taskState: 'INCOMPLETE',
                     task.id === action.payload.id ?  { ...task, state: action.payload.state, description: action.payload.description}  : task
                                                                  
             ),
-                edit:{}
+                edit:{},
+                loading: false
             }        
-
+        case 'LOADING':
+                const newLoading = Object.assign({}, state, {tasks: [...state.tasks], loading: true} )
+                console.log('loading', newLoading)
+            return newLoading
+                
+               
 
          default: return state   
     }

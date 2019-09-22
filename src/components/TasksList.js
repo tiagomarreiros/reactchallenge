@@ -9,6 +9,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+//import { FixedSizeList } from 'react-window';
+
 import TaskItem from './TaskItem';
 import styles from '../styles/styleComps';
 
@@ -48,11 +51,9 @@ class TasksList extends React.Component {
   render(){
     const { tasks, classes } = this.props
     console.log('list props', this.props)
+    
     return (
       
-      tasks.loading === false ? 
-      <div>Loading....</div>
-      :
       <List className={classes.root}
           subheader={
               <ListSubheader component="div" id="nested-list-subheader">
@@ -68,8 +69,10 @@ class TasksList extends React.Component {
       >
         
           {
+            this.props.tasks.loading === true ?
+              <CircularProgress className={classes.progress} />  :
             tasks.tasks.map( (task, index) => (
-
+              
               <TaskItem 
                 key={index} 
                 toggleTask={this.props.toggleTask} 
@@ -79,6 +82,8 @@ class TasksList extends React.Component {
                 taskName={task.description}
                 deleteTask={this.props.deleteTask}
                 editTask={this.props.editTask}
+                setLoading={this.props.setLoading}
+                loading={this.props.tasks.loading}
                 />
                 ))}
                      
@@ -98,6 +103,7 @@ class TasksList extends React.Component {
                     </DialogContent>
                     <DialogActions>
                       <Button onClick={() => {
+                        this.props.setLoading(true)
                         this.props.updateTask(tasks.edit.id, tasks.edit.taskState, this.state.text)
                         this.setState({text: ''})
                         this.handleClose()
